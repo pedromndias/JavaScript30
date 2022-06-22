@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+    // First we get the canvas:
+    const canvas = document.querySelector("#draw")
+    // Then we get its context, which is where we actually draw:
+    const ctx = canvas.getContext("2d")
+    // Size the canvas tobe the window size:
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    // Then we define the initial different drawing options:
+    ctx.strokeStyle = "#BADA55"
+    ctx.lineJoin = "round"
+    ctx.lineCap = "round"
+    ctx.lineWidth = 100
+    // Then we define a variable so the cursor only draws when it is down:
+    let isDrawing = false
+    // To draw lines we need a start and a stop, so the next variables will help us with that:
+    let lastX = 0
+    let lastY = 0
+    // Let's create a variable for the color hsl:
+    let hue = 0
+    // THe next variable will help us on the line width:
+    let direction = true
+
+    // Let's create a function that will be called when we move the cursor on the canvas:
+    function draw(e) {
+        // This function should not run if the mouse is not down:
+        if(!isDrawing) return
+        // Let's update the initial strokeStyle with our hue value:
+        ctx.strokeStyle = `hsl(${hue}, 100%, 50%)` // Note the saturation and light values as well
+        
+        console.log(e)
+        // Let's start a path:
+        ctx.beginPath()
+        // Start from:
+        ctx.moveTo(lastX, lastY)
+        // Now we get the values from the event, values to go:
+        ctx.lineTo(e.offsetX, e.offsetY)
+        // And we call stroke:
+        ctx.stroke();
+        // Now we need to update the values:
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+        // Let's increment the hue to display different colors:
+        hue++
+        // And reset it after 360:
+        if(hue >= 360) {
+            hue = 0
+        }
+        // We can also update the lineWidth:
+        if(ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+            direction = !direction
+        }
+        if(direction) {
+            ctx.lineWidth++ 
+        } else {
+            ctx.lineWidth--
+        }
+       
+
+    }
+    // Event listener to change the variable isDrawing when the mouse down and set lastX and lastY:
+    canvas.addEventListener("mousedown", (e) => {
+        isDrawing = true;
+        [lastX, lastY] = [e.offsetX, e.offsetY]
+    })
+    // Event listener to call the draw function:
+    canvas.addEventListener("mousemove", draw)
+    // Event listener to change the variable isDrawing when the mouse up:
+    canvas.addEventListener("mouseup", () => isDrawing = false)
+    // If the mouse is out of the window then the drawing should stop:
+    canvas.addEventListener("mouseout", () => isDrawing = false)
+
+
+</script>
+<style>
+  html, body {
+    margin: 0;
+  }
+</style>
+
+</body>
+</html>
