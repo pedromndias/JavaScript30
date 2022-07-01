@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+  // Let's define an empty array (to fill with keys) and a secret code:
+  const pressed = []
+  const secretCode = "wesbos"
+
+
+  window.addEventListener("keyup", (e)=> {
+    // Let's push the keys to our array:
+    pressed.push(e.key)
+    // Now we splice it. We need to start from on index before the length of the secret code and start on the difference between our array's length and the secret's length. This will always give an array of length = secretCode.length
+    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length)
+    if(pressed.join("").includes(secretCode)) {
+      console.log("You found the secret!")
+    }
+  })
+</script>
+</body>
+</html>
