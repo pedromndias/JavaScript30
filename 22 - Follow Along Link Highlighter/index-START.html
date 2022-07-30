@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>👀👀👀Follow Along Nav</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+      <ul class="menu">
+        <li><a href="">Home</a></li>
+        <li><a href="">Order Status</a></li>
+        <li><a href="">Tweets</a></li>
+        <li><a href="">Read Our History</a></li>
+        <li><a href="">Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <div class="wrapper">
+      <p>Lorem ipsum dolor sit amet, <a href="">consectetur</a> adipisicing elit. Est <a href="">explicabo</a> unde natus necessitatibus esse obcaecati distinctio, aut itaque, qui vitae!</p>
+      <p>Aspernatur sapiente quae sint <a href="">soluta</a> modi, atque praesentium laborum pariatur earum <a href="">quaerat</a> cupiditate consequuntur facilis ullam dignissimos, aperiam quam veniam.</p>
+      <p>Cum ipsam quod, incidunt sit ex <a href="">tempore</a> placeat maxime <a href="">corrupti</a> possimus <a href="">veritatis</a> ipsum fugit recusandae est doloremque? Hic, <a href="">quibusdam</a>, nulla.</p>
+      <p>Esse quibusdam, ad, ducimus cupiditate <a href="">nulla</a>, quae magni odit <a href="">totam</a> ut consequatur eveniet sunt quam provident sapiente dicta neque quod.</p>
+      <p>Aliquam <a href="">dicta</a> sequi culpa fugiat <a href="">consequuntur</a> pariatur optio ad minima, maxime <a href="">odio</a>, distinctio magni impedit tempore enim repellendus <a href="">repudiandae</a> quas!</p>
+    </div>
+
+  <script>
+    // The idea here is to highlight the links we are hovering over and  that it seems that it follows the mouse.
+    // First, let's get the links:
+    const triggers = document.querySelectorAll("a")
+    // Now we create a span element
+    const highlight = document.createElement("span")
+    // And add it the class "highlight":
+    highlight.classList.add("highlight")
+    // Then we append it to the DOM:
+    document.body.append(highlight)
+
+    // The next function will see when we mouseover a link:
+    function hightlightLink() {
+      // We want to get the information of where on the page the link is:
+      const linkCoords = this.getBoundingClientRect()
+      console.log(linkCoords)
+      // We also need to get new coords in case the user scrolls:
+      const coords = {
+        width: linkCoords.width,
+        height: linkCoords.height,
+        top: linkCoords.top + window.scrollY,
+        left: linkCoords.left + window.scrollX
+      }
+      // Now we can apply the styles:
+      highlight.style.width = `${coords.width}px`
+      highlight.style.height = `${coords.height}px`
+      // And we can work it the left and top properties:
+      highlight.style.transform = `translate(${coords.left}px, ${coords.top}px)`
+    }
+    // And we need to create the mouse event:
+    triggers.forEach(item => {
+      item.addEventListener("mouseenter", hightlightLink)
+    })
+
+
+  </script>
+</body>
+</html>
+
